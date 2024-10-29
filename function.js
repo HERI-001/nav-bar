@@ -40,7 +40,15 @@ let carts = [
 let cart = [];
 
 function addToCart(item) {
-  cart.push(item);
+  let itemExists = cart.find((a) => a.product == item.product);
+  if (itemExists) {
+    itemExists.quantity = itemExists.quantity + 1;
+    let indexOfItem = cart.findIndex((a) => a.product == item.product);
+    cart[indexOfItem] = itemExists;
+  } else {
+    item.quantity = 1;
+    cart.push(item);
+  }
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
 }
